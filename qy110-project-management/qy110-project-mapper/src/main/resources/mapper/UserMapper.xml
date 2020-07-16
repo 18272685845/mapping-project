@@ -32,4 +32,6 @@
   <select id="selectAllUser" resultMap="BaseResultMap">
       select u.id,u.username,u.email,u.status,u.create_time,u.ssex,u.`type`,u.last_login_time,description,d.DEPT_NAME from t_user u left join t_dept d on u.dept_id=d.DEPT_ID
   </select>
+
+
 </mapper>

@@ -9,5 +9,11 @@ import java.util.List;
 @Repository
 public interface UserMapper extends Mapper<User> {
 
+    /**
+     * 查询所有用户
+     * @return
+     */
     public List<User> selectAllUser();
+
+
 }
