@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/menu")
-@Api(value = "菜单管理模块",tags = "菜单管理模块")
-public class MenuController {
+@Api(value = "权限管理模块",tags = "权限管理模块")
+public class PerController {
     @Autowired
     private SpringCloudService springCloudService;
 
@@ -24,8 +24,8 @@ public class MenuController {
      */
 
     @GetMapping("/selectAllMenu")
-    @ApiOperation(value = "查询所有菜单",notes = "<span style='color:red;'>描述：</span>查询所有菜单")
-    public ResultData  selectAllMenu(@RequestParam Long userid){
+    @ApiOperation(value = "查询所有权限",notes = "<span style='color:red;'>描述：</span>查询所有权限")
+    public ResultData  selectAllPer(@RequestParam Long userid){
         return springCloudService.selectAllMenu(userid);
     }
 }
