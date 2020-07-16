@@ -1,0 +1,75 @@
+server:
+  port: 8081
+  servlet:
+    context-path: /
+#mysql数据源配置 192.168.1.28
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mapping
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource
+    # 下面的配置比较常用
+    # 当项目运行的时候，会自动加载sql文件，去生成数据库表以及表数据(前提是你的数据库必须存在)
+    # 初始化数据库
+    # 初始化的表和表中的数据官方的意思是让你分开写，但是后来我发现合在一起写也行
+    # 官方文档的意思schema只能让你初始化表
+    # data才是初始化数据用的
+    # spring.datasource.data=
+    schema: classpath:sql/qy_109110.sql
+    # always：每一次启动项目都会加载sql文件，初始化数据库
+    # never: 每次启动项目都不会加载sql文件
+    # embedded：加载内存数据库(非关系型数据库(redis...))
+    initialization-mode: never
+  application:
+    name: springcloud-provider
+
+
+
+#mybatis相关配置
+mybatis:
+  type-aliases-package: com.aaa.model
+  #指定mapper映射文件
+  mapper-locations: classpath:mapper/*.xml
+
+#Eureka的配置，服务注册到哪里
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka/,http://localhost:7002/eureka/,http://localhost:7003/eureka/
+  instance:
+    instance-id: springcloud-provider-8081 #修改Eureka上的默认描述信息
+    # 失效eureka的自我保护机制
+    # 配置自己向eureka去发送心跳的时间(单位是秒)
+    lease-renewal-interval-in-seconds: 5
+    # 配置在eureka最后一次接收到心跳往后数几秒进行剔除
+    lease-expiration-duration-in-seconds: 8
+
+
+# 这个时候发现了其实eureka所显示的provider都是一个a标签，但是点进去之后会报错404(这个时候也是springcloud所给程序员提供的一种便利)
+# 当点击a标签的时候，显示的就是provider的开发者，公司名称，provider所提供的功能，provider下所有controller以及调用方法
+# info开头--->剩下的信息你可以随意去编写
+# 如果想要让以下信息生效，就必须要添加jar包(必须要添加actuator的jar包)
+info:
+  author.name: guo
+  company.name: AAA
+  project.description: Test dept Demo
+
+# 通用mapper的配置
+# 因为通用mapper并不只是支持MySQL，所以当需要使用自增主键的时候需要指定数据库的类型
+mapper:
+  identity: MYSQL
+  # 配置通用mapper的基础类
+  mappers: tk.mybatis.mapper.common.Mapper
+  # <update> update set user where 1 = 1 <if test='username != null'> and username = #{username} </if> </update>
+  not-empty: true
+  # 因为项目中大量使用到了枚举，但是通用mapper并不认识枚举，所以需要把枚举让他默认自动转换为基础类型处理
+  enum-as-simple-type: true
+
+#pagehelper分页插件
+pagehelper:
+  helper-dialect: mysql
+  reasonable: false
+  support-methods-arguments: true
+  params: count=countsql

@@ -1,0 +1,25 @@
+server:
+  port: 80
+  servlet:
+    context-path: /
+
+#  #Eureka配置
+eureka:
+  client:
+    register-with-eureka: false #不向Eureka注册自己
+    service-url:
+      defaultZone: http://localhost:7001/eureka/,http://localhost:7002/eureka/,http://localhost:7003/eureka/
+
+
+
+#控制台打印sql
+logging:
+  level:
+    com:
+      aaa:
+        dao: debug
+
+# 打开feign对hystrix支持(默认是关闭的) 开发阶段别开
+feign:
+  hystrix:
+    enabled: false

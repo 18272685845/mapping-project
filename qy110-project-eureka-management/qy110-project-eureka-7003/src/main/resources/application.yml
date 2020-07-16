@@ -1,0 +1,21 @@
+server:
+  port: 7003
+  #Eureka配置
+eureka:
+  instance:
+    hostname: Eureka7003 #Eureka服务端的名称
+  client:
+    register-with-eureka: false #表示是否向eureka注册中心注册自己
+    fetch-registry: false #fetch-registry: false如果为false，则表示自己为注册中心
+    service-url: #监控页面
+      #Eureka集群搭建
+      defaultZone: http://localhost:7001/eureka/,http://localhost:7002/eureka/
+
+#失效eureka的自我保护机制
+#  server:
+#    eviction-interval-timer-in-ms: 7000
+#关闭eureka的自我保护机制
+#  server:
+#    enable-self-preservation: false
+
+
