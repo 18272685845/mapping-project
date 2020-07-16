@@ -129,7 +129,7 @@ public interface SpringCloudService {
     public ResultData selectAllUser();
 
     /**
-     *      查询菜单
+     *      权限
      * @param userid
      * @return
      */
