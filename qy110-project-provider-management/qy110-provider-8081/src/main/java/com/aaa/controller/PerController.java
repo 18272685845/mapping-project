@@ -19,8 +19,8 @@ import java.util.List;
 public class PerController extends BaseController {
     @Autowired
     private PerService perService;
-    @GetMapping("/selectAllMenu")
-    public ResultData selectAllMenu(@RequestParam("userid")Long userid){
+    @GetMapping("/selectAllPer")
+    public ResultData selectAllPer(@RequestParam("userid")Long userid){
         List<Menu> menus = perService.selectAllMenu(userid);
         if (menus.size() > 0 && menus != null){
           return selectSuccess(menus);
