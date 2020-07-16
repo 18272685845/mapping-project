@@ -81,13 +81,13 @@ public class Menu implements Serializable {
      * 创建时间
      */
     @Column(name = "CREATE_TIME")
-    private Date CREATE_TIME;
+    private String CREATE_TIME;
 
     /**
      * 修改时间
      */
     @Column(name = "MODIFY_TIME")
-    private Date MODIFY_TIME;
+    private String MODIFY_TIME;
 
     private List<Menu> listMenu;
 }
