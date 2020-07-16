@@ -23,9 +23,9 @@ public class PerController {
      * @return
      */
 
-    @GetMapping("/selectAllMenu")
+    @GetMapping("/selectAllPer")
     @ApiOperation(value = "查询所有权限",notes = "<span style='color:red;'>描述：</span>查询所有权限")
     public ResultData  selectAllPer(@RequestParam Long userid){
-        return springCloudService.selectAllMenu(userid);
+        return springCloudService.selectAllPer(userid);
     }
 }
