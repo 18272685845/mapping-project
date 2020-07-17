@@ -452,6 +452,27 @@ public class BaseController {
     }
     //TODO 代码未完善
 
+    /**
+     * 查询成功，返回系统消息
+     * @return
+     */
+    protected ResultData selectAllRole(){
+        ResultData resultData = new ResultData();
+        resultData.setCode(SELECT_SUCCESS.getCode());
+        resultData.setCode(SELECT_SUCCESS.getMsg());
+        return resultData;
+    }
+
+    /**
+     * 查询成功，返回自定义消息
+     * @return
+     */
+    protected ResultData selectAllRole(String msg){
+        ResultData resultData = new ResultData();
+        resultData.setCode(SELECT_FAILED.getCode());
+        resultData.setCode(msg);
+        return resultData;
+    }
 
 
 }

@@ -4,7 +4,13 @@ import com.aaa.base.ResultData;
 import com.aaa.model.*;
 import com.aaa.vo.DeptVo;
 import com.aaa.vo.DictVo;
+
 import com.aaa.vo.RoleMenuVo;
+
+import com.aaa.vo.RoleSelecter;
+import com.aaa.vo.PageVo;
+import com.aaa.vo.UpdateOrAddUserVo;
+
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
@@ -120,11 +126,105 @@ public interface SpringCloudService {
     public ResultData deleteBatchByIds(@RequestBody List<Integer> ids);
 
     /**
-     * 查询所有用户信息
+     * 分页查询所有用户信息
      * @return
      */
-    @GetMapping("/selectAllUser")
-    public ResultData selectAllUser();
+    @PostMapping("/selectPageAllUser")
+    public ResultData selectPageAllUser(@RequestBody PageVo pageVo);
+
+    /**
+     * 查看全部角色
+     * @return
+     */
+    @GetMapping("/selectList")
+    ResultData selectList();
+
+    /**
+     * 模糊查询
+     * @param roleSelecter
+     * @return
+     */
+    @GetMapping("/selectOne")
+    ResultData selectOne(@RequestBody RoleSelecter roleSelecter);
+
+    /**
+     * 查看详细信息
+     * @param role
+     * @return
+     */
+    @GetMapping("/selectOneBath")
+    ResultData selectOneRole(@RequestBody Role role);
+
+    /**
+     * 新增角色
+     * @param role
+     * @return
+     */
+    @PutMapping("/insert")
+    ResultData insertRole(@RequestBody Role role);
+
+
+    /**
+     * 删除角色,并将角色的权限删除
+     * @param ids
+     * @return
+     */
+
+    @PostMapping ("/deleteRole")
+    ResultData deleteRole(List<Integer> ids);
+
+
+
+
+
+    /**
+     * 查询所有角色
+     * @return
+     */
+    @GetMapping("/selectAllRole")
+    public ResultData selectAllRole();
+    /**
+     * 根据用户id查询所对应的角色
+     */
+    @GetMapping("/selectByIdUserRole")
+    public ResultData selectByIdUserRole(@RequestParam("id") Integer id);
+
+    /**
+     * 根据id批量删除用户
+     * @param ids
+     * @return
+     */
+    @PostMapping("/deleteBatchUser")
+    public ResultData deleteBatchUser (@RequestBody List<Integer> ids);
+
+    /**
+     * 根据用户id修改用户信息
+     * @return
+     */
+    @PostMapping("/updateUser")
+    public ResultData updateUser(@RequestBody UpdateOrAddUserVo updateUserVo);
+    /**
+     * 新增用户
+     * @param addUserVo
+     * @return
+     */
+    @PostMapping("/addUser")
+    public ResultData addUser(@RequestBody UpdateOrAddUserVo addUserVo);
+
+    /**
+     * 获取用户的字典表状态
+     * @return
+     */
+    @GetMapping("/getUserStatus")
+    public ResultData getUserStatus();
+
+    /**
+     * 获取用户字典表性别值
+     * @return
+     */
+    @GetMapping("/getUserSsex")
+    public ResultData getUserSsex();
+
 
     /**
      *      查询用户权限

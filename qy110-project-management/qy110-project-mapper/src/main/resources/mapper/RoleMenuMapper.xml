@@ -8,4 +8,18 @@
     <result column="ROLE_ID" property="roleId" jdbcType="BIGINT" />
     <result column="MENU_ID" property="menuId" jdbcType="BIGINT" />
   </resultMap>
+
+  <delete id="batchDeleteRoleMenuByRoleId" parameterType="java.util.List">
+    DELETE FROM t_role_menu WHERE ROLE_ID IN
+    <foreach collection="list" item="rolemenu" index="index" separator="," open="(" close=")">
+        #{rolemenu}
+    </foreach>
+  </delete>
+  <insert id="insertRoleMenuByRoleId" parameterType="java.util.List">
+        insert into t_role_menu(role_id,menu_id) values
+        <foreach collection="list" item="rolemenu" separator=",">
+          (#{rolemenu.roleId},#{rolemenu.menuId})
+        </foreach>
+  </insert>
+
 </mapper>

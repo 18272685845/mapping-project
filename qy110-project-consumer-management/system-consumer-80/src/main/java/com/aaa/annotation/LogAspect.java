@@ -120,8 +120,11 @@ public class LogAspect {
         loginLog.setOperationName(operationName);
         loginLog.setOperationType(operationType);
 
-        springCloudService.addLoginLog(loginLog);
-
-        return result;
+        Integer integer = springCloudService.addLoginLog(loginLog);
+        System.out.println(integer);
+        if (integer>0){
+            return result;
+        }
+        return null;
     }
 }

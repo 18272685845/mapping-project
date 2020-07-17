@@ -1,7 +1,10 @@
 package com.aaa.base;
 
+import com.aaa.model.Role;
+import com.aaa.model.RoleMenu;
 import com.aaa.utils.Map2BeanUtils;
 import com.aaa.utils.SpringContextUtils;
+import com.aaa.vo.RoleSelecter;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,8 +85,9 @@ public abstract class BaseService<T> {
      * 根据主键批量删除
      * @return
      */
-    public Integer deleteByIds(List<Integer> ids){
-        Example example = Example.builder(getTypeArguement()).where(Sqls.custom().andIn("id", ids)).build();
+    public Integer deleteByIds(List<String> ids){
+        Example example = Example.builder(getTypeArguement()).where(Sqls.custom().andIn("roleId", ids)).build();
+        System.out.println(example + "example");
         return mapper.deleteByExample(example);
     }
     
@@ -236,6 +240,7 @@ public abstract class BaseService<T> {
     public ApplicationContext getApplicationContext(){
         return SpringContextUtils.getApplicationContext();
     }
+
 
 
 }
