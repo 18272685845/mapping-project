@@ -68,6 +68,10 @@ public abstract class BaseService<T> {
         return mapper.updateByPrimaryKey(t);
     }
 
+    public Integer update1(T t){
+        return mapper.updateByPrimaryKey(t);
+    }
+
     /**
      * 根据主键删除
      * @return
@@ -85,7 +89,7 @@ public abstract class BaseService<T> {
         Example example = Example.builder(getTypeArguement()).where(Sqls.custom().andIn("id", ids)).build();
         return mapper.deleteByExample(example);
     }
-
+    
     /**
      * 批量更新
      * @return

@@ -1,10 +1,7 @@
 package com.aaa.service;
 
 import com.aaa.base.ResultData;
-import com.aaa.model.Dept;
-import com.aaa.model.Dict;
-import com.aaa.model.LoginLog;
-import com.aaa.model.User;
+import com.aaa.model.*;
 import com.aaa.vo.DeptVo;
 import com.aaa.vo.DictVo;
 import com.aaa.vo.PageVo;
@@ -178,4 +175,43 @@ public interface SpringCloudService {
     @GetMapping("/getUserSsex")
     public ResultData getUserSsex();
 
+
+    /**
+     *      权限
+     * @param userid
+     * @return
+     */
+    @GetMapping("/selectAllPer")
+    ResultData selectAllPer(@RequestParam("userid") Long userid);
+
+    /**
+     *  查询所有菜单
+     * @return
+     */
+    @GetMapping("/selectAllMenu")
+    ResultData selectAllMenu();
+
+    /**
+     *      修改菜单
+     * @param menu
+     * @return
+     */
+    @PostMapping("/updateMenu")
+     ResultData updateMenu(@RequestBody Menu menu);
+
+    /**
+     *      添加菜单
+     * @param menu
+     * @return
+     */
+    @PostMapping("/insertMenu")
+    public ResultData insertMenu(@RequestBody Menu menu);
+
+    /**
+     *      删除菜单
+     * @param ids
+     * @return
+     */
+    @PostMapping("/deleteMenu")
+    public ResultData deleteMenu(@RequestBody List<Integer> ids);
 }
