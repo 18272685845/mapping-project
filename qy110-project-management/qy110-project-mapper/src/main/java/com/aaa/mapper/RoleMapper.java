@@ -9,7 +9,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
-
+/**
+ * @auther LQY
+ * @date 2020-07-16
+ **/
 @Repository
 public interface RoleMapper extends Mapper<Role> {
     /**

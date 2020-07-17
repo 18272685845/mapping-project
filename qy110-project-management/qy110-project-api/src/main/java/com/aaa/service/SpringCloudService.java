@@ -7,6 +7,7 @@ import com.aaa.vo.DictVo;
 import com.aaa.vo.RoleSelecter;
 import com.aaa.vo.PageVo;
 import com.aaa.vo.UpdateOrAddUserVo;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
@@ -260,4 +261,44 @@ public interface SpringCloudService {
      */
     @PostMapping("/deleteMenu")
     public ResultData deleteMenu(@RequestBody List<Integer> ids);
+
+    /**
+     * 项目统计信息
+     * @return
+     */
+    @GetMapping("/selectAllUnit")
+    public ResultData selectAllUnit();
+
+    /**
+     * 所有单位统计信息
+     * @return
+     */
+    @GetMapping("/selectAllProject")
+    public ResultData selectAllProject();
+
+    /**
+     * 项目类型
+     */
+    @GetMapping("/selectQualification")
+    public ResultData selectQualification();
+
+    /**
+     * 查询单位资质等级
+     */
+    @GetMapping("/selectQualificationLevel")
+    public ResultData selectQualificationLevel();
+
+    /**
+     * 单位所属技术员和项目数量
+     * @return
+     */
+    @GetMapping("/selectTechnicist")
+    public ResultData selectTechnicist(Integer userId);
+
+    /**
+     * 所有单位人员设备汇总统计
+     * @return
+     */
+    @GetMapping("/selectEquipmentByUnit")
+    public ResultData selectEquipmentByUnit();
 }
