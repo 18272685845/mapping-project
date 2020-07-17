@@ -68,7 +68,11 @@ public abstract class BaseService<T> {
      * @throws Exception
      */
     public Integer update(T t){
-        return mapper.updateByPrimaryKeySelective(t);
+        return mapper.updateByPrimaryKey(t);
+    }
+
+    public Integer update1(T t){
+        return mapper.updateByPrimaryKey(t);
     }
 
     /**
@@ -89,7 +93,7 @@ public abstract class BaseService<T> {
         System.out.println(example + "example");
         return mapper.deleteByExample(example);
     }
-
+    
     /**
      * 批量更新
      * @return

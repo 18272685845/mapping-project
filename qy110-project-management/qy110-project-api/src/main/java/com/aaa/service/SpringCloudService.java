@@ -5,7 +5,8 @@ import com.aaa.model.*;
 import com.aaa.vo.DeptVo;
 import com.aaa.vo.DictVo;
 import com.aaa.vo.RoleSelecter;
-import feign.Param;
+import com.aaa.vo.PageVo;
+import com.aaa.vo.UpdateOrAddUserVo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
@@ -121,11 +122,11 @@ public interface SpringCloudService {
     public ResultData deleteBatchByIds(@RequestBody List<Integer> ids);
 
     /**
-     * 查询所有用户信息
+     * 分页查询所有用户信息
      * @return
      */
-    @GetMapping("/selectAllUser")
-    public ResultData selectAllUser();
+    @PostMapping("/selectPageAllUser")
+    public ResultData selectPageAllUser(@RequestBody PageVo pageVo);
 
     /**
      * 查看全部角色
@@ -169,4 +170,94 @@ public interface SpringCloudService {
     ResultData deleteRole(List<Integer> ids);
 
 
+
+
+
+    /**
+     * 查询所有角色
+     * @return
+     */
+    @GetMapping("/selectAllRole")
+    public ResultData selectAllRole();
+    /**
+     * 根据用户id查询所对应的角色
+     */
+    @GetMapping("/selectByIdUserRole")
+    public ResultData selectByIdUserRole(@RequestParam("id") Integer id);
+
+    /**
+     * 根据id批量删除用户
+     * @param ids
+     * @return
+     */
+    @PostMapping("/deleteBatchUser")
+    public ResultData deleteBatchUser (@RequestBody List<Integer> ids);
+
+    /**
+     * 根据用户id修改用户信息
+     * @return
+     */
+    @PostMapping("/updateUser")
+    public ResultData updateUser(@RequestBody UpdateOrAddUserVo updateUserVo);
+    /**
+     * 新增用户
+     * @param addUserVo
+     * @return
+     */
+    @PostMapping("/addUser")
+    public ResultData addUser(@RequestBody UpdateOrAddUserVo addUserVo);
+
+    /**
+     * 获取用户的字典表状态
+     * @return
+     */
+    @GetMapping("/getUserStatus")
+    public ResultData getUserStatus();
+
+    /**
+     * 获取用户字典表性别值
+     * @return
+     */
+    @GetMapping("/getUserSsex")
+    public ResultData getUserSsex();
+
+
+    /**
+     *      权限
+     * @param userid
+     * @return
+     */
+    @GetMapping("/selectAllPer")
+    ResultData selectAllPer(@RequestParam("userid") Long userid);
+
+    /**
+     *  查询所有菜单
+     * @return
+     */
+    @GetMapping("/selectAllMenu")
+    ResultData selectAllMenu();
+
+    /**
+     *      修改菜单
+     * @param menu
+     * @return
+     */
+    @PostMapping("/updateMenu")
+     ResultData updateMenu(@RequestBody Menu menu);
+
+    /**
+     *      添加菜单
+     * @param menu
+     * @return
+     */
+    @PostMapping("/insertMenu")
+    public ResultData insertMenu(@RequestBody Menu menu);
+
+    /**
+     *      删除菜单
+     * @param ids
+     * @return
+     */
+    @PostMapping("/deleteMenu")
+    public ResultData deleteMenu(@RequestBody List<Integer> ids);
 }
