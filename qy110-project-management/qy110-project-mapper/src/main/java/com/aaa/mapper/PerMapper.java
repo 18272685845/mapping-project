@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @author 王登辉
  * @date 2020/7/16
- *  权限
+ *  查询用户权限
 **/
 public interface PerMapper{
     @Select("select tm.* from " +

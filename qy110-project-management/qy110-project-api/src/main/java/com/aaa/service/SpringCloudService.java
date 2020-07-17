@@ -4,10 +4,13 @@ import com.aaa.base.ResultData;
 import com.aaa.model.*;
 import com.aaa.vo.DeptVo;
 import com.aaa.vo.DictVo;
+
+import com.aaa.vo.RoleMenuVo;
+
 import com.aaa.vo.RoleSelecter;
 import com.aaa.vo.PageVo;
 import com.aaa.vo.UpdateOrAddUserVo;
-import io.swagger.annotations.ApiOperation;
+
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
@@ -224,7 +227,7 @@ public interface SpringCloudService {
 
 
     /**
-     *      权限
+     *      查询用户权限
      * @param userid
      * @return
      */
@@ -232,11 +235,12 @@ public interface SpringCloudService {
     ResultData selectAllPer(@RequestParam("userid") Long userid);
 
     /**
-     *  查询所有菜单
+     *      获取所有菜单
+     * @param menu
      * @return
      */
-    @GetMapping("/selectAllMenu")
-    ResultData selectAllMenu();
+    @PostMapping("/selectAllMenu")
+    ResultData selectMenuById(@RequestBody Menu menu);
 
     /**
      *      修改菜单
@@ -252,7 +256,7 @@ public interface SpringCloudService {
      * @return
      */
     @PostMapping("/insertMenu")
-    public ResultData insertMenu(@RequestBody Menu menu);
+    ResultData insertMenu(@RequestBody Menu menu);
 
     /**
      *      删除菜单
@@ -263,6 +267,7 @@ public interface SpringCloudService {
     public ResultData deleteMenu(@RequestBody List<Integer> ids);
 
     /**
+<<<<<<< HEAD
      * 项目统计信息
      * @return
      */
@@ -301,4 +306,14 @@ public interface SpringCloudService {
      */
     @GetMapping("/selectEquipmentByUnit")
     public ResultData selectEquipmentByUnit();
+
+    /**
+     * 修改角色权限
+     * @param roleMenuVo
+     * @return
+     */
+    @PostMapping("/updatePer")
+    ResultData updatePer(@RequestBody RoleMenuVo roleMenuVo);
+
+
 }

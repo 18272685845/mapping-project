@@ -71,9 +71,6 @@ public abstract class BaseService<T> {
         return mapper.updateByPrimaryKey(t);
     }
 
-    public Integer update1(T t){
-        return mapper.updateByPrimaryKey(t);
-    }
 
     /**
      * 根据主键删除

@@ -26,7 +26,7 @@ public class LoginController {
      * @return
      */
     @PostMapping("/doLogin")
-    @LoginAnnotation(opeationType = "登陆操作", opeationName ="用户登陆" )
+//    @LoginAnnotation(opeationType = "登陆操作", opeationName ="用户登陆" )
     @ApiOperation(value = "登陆操作",notes = "<span style='color:red;'>描述：</span>登陆操作")
     public ResultData doLogin(@RequestBody User user){
         return springCloudService.doLogin(user);
