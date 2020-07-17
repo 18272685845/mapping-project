@@ -1,18 +1,14 @@
 package com.aaa.service;
 
 import com.aaa.base.ResultData;
-import com.aaa.model.Dept;
-import com.aaa.model.Dict;
-import com.aaa.model.LoginLog;
-import com.aaa.model.User;
+import com.aaa.model.*;
 import com.aaa.vo.DeptVo;
 import com.aaa.vo.DictVo;
+import com.aaa.vo.RoleSelecter;
+import feign.Param;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -130,4 +126,47 @@ public interface SpringCloudService {
      */
     @GetMapping("/selectAllUser")
     public ResultData selectAllUser();
+
+    /**
+     * 查看全部角色
+     * @return
+     */
+    @GetMapping("/selectList")
+    ResultData selectList();
+
+    /**
+     * 模糊查询
+     * @param roleSelecter
+     * @return
+     */
+    @GetMapping("/selectOne")
+    ResultData selectOne(@RequestBody RoleSelecter roleSelecter);
+
+    /**
+     * 查看详细信息
+     * @param role
+     * @return
+     */
+    @GetMapping("/selectOneBath")
+    ResultData selectOneRole(@RequestBody Role role);
+
+    /**
+     * 新增角色
+     * @param role
+     * @return
+     */
+    @PutMapping("/insert")
+    ResultData insertRole(@RequestBody Role role);
+
+
+    /**
+     * 删除角色,并将角色的权限删除
+     * @param ids
+     * @return
+     */
+
+    @PostMapping ("/deleteRole")
+    ResultData deleteRole(List<Integer> ids);
+
+
 }

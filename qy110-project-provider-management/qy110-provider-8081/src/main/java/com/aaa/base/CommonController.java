@@ -100,8 +100,8 @@ public abstract class CommonController<T> extends BaseController {
      * @param ids
      * @return
      */
-    public ResultData batchDelete(@RequestParam("ids[]") Integer[] ids){
-        Integer deleteByIds = getBaseService().deleteByIds(Arrays.asList(ids));
+    public ResultData batchDelete(@RequestParam("ids") List<String> ids){
+        Integer deleteByIds = getBaseService().deleteByIds((List) Arrays.asList(ids));
         if (deleteByIds > 0){
             return super.delDataSuccess("批量删除成功");
         }

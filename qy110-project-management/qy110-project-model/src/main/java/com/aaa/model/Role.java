@@ -29,7 +29,7 @@ public class Role {
      * 创建时间
      */
     @Column(name = "CREATE_TIME")
-    private Date createTime;
+    private String createTime;
 
     /**
      * 修改时间
@@ -96,7 +96,7 @@ public class Role {
      *
      * @return CREATE_TIME - 创建时间
      */
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
@@ -105,7 +105,7 @@ public class Role {
      *
      * @param createTime 创建时间
      */
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
