@@ -22,16 +22,17 @@ public class MenuController {
 
     @Autowired
     private SpringCloudService springCloudService;
+
     /**
-     *  查询所有菜单
+     *      获取所有菜单
+     * @param menu
      * @return
      */
-    @GetMapping("/selectAllMenu")
-    @ApiOperation(value = "查询所有菜单",notes = "<span style='color:red;'>描述：</span>查询所有菜单")
-    private ResultData selectAllMenu(){
-        return springCloudService.selectAllMenu();
+    @PostMapping("/selectAllMenu")
+    @ApiOperation(value = "获取所有菜单",notes = "<span style='color:red;'>描述：</span>获取所有菜单")
+    public ResultData selectMenuById(@RequestBody Menu menu){
+        return springCloudService.selectMenuById(menu);
     }
-
     /**
      *      修改菜单
      * @param menu
@@ -60,6 +61,7 @@ public class MenuController {
      * @return
      */
     @PostMapping("/deleteMenu")
+    @ApiOperation(value = "删除菜单",notes = "<span style='color:red;'>描述：</span>删除菜单")
     public ResultData deleteMenu(@RequestBody List<Integer> ids){
         System.out.println(ids.toString());
         return springCloudService.deleteMenu(ids);
