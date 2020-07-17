@@ -32,6 +32,44 @@
   <select id="selectAllUser" resultMap="BaseResultMap">
       select u.id,u.username,u.email,u.status,u.create_time,u.ssex,u.`type`,u.last_login_time,description,d.DEPT_NAME from t_user u left join t_dept d on u.dept_id=d.DEPT_ID
   </select>
+  <select id="selectAllRole" resultType="HashMap">
+      select ROLE_ID,ROLE_NAME from t_role
+  </select>
+    <select id="selectByIdUserRole"  resultType="Integer" parameterType="Integer">
+        select * from t_user_role where USER_ID=#{id}
+    </select>
+    <delete id="deleteBatchUser">
+        delete from t_user where id in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+    <delete id="deleteUserIdByRole" parameterType="Integer">
+        delete from t_user_role where user_id in
+        <foreach collection="list" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </delete>
+    <insert id="insertUserRole" parameterType="HashMap">
+        insert into t_user_role(user_id,role_id) values
+        <foreach collection="roleIDs" item="roleID" separator=",">
+            (#{id},#{roleID})
+        </foreach>
+    </insert>
+    <select id="selectByUserName" parameterType="String" resultType="Long">
+        select id from t_user where username=#{username} LIMIT 1
+    </select>
+
+    <select id="getUserStatus" resultType="HashMap">
+        select keyy,valuee from t_dict where FIELD_NAME="status" and TABLE_NAME="t_user"
+    </select>
+
+    <select id="getUserSsex" resultType="HashMap">
+        select keyy,valuee from t_dict where FIELD_NAME="ssex" and TABLE_NAME="t_user"
+    </select>
+
+
+
 
 
 </mapper>
