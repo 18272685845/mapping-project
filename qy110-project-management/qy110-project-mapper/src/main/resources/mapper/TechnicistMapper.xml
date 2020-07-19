@@ -36,4 +36,5 @@
   <select id="selectTechnicistById" resultType="HashMap" parameterType="Integer">
          select * from t_technicist where user_id=#{userId}
   </select>
+
 </mapper>

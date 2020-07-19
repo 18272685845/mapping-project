@@ -7,21 +7,24 @@ import com.aaa.utils.DateUtils;
 import com.aaa.utils.IdUtils;
 import com.aaa.vo.InsertProjectVo;
 import com.aaa.vo.MappingProjectVo;
-import com.github.pagehelper.PageHelper;
+
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
+
+import java.util.List;
 /**
- * @Author 郭航宇
+ * @Author 郭航宇 LQY
  * @Date 14:53 2020/7/18
  * Description:
  **/
 
 @Service
 public class MappingProjectService extends BaseService<MappingProject> {
+
     @Autowired
     private MappingProjectMapper mappingProjectMapper;
 
@@ -45,19 +48,19 @@ public class MappingProjectService extends BaseService<MappingProject> {
      * 新增项目信息
      * @return
      */
-    public Integer insertMappingProject(InsertProjectVo insertProjectVo){
-        if (insertProjectVo.getMappingProject() != null && insertProjectVo.getResultCommit()!=null){
+    public Integer insertMappingProject(InsertProjectVo insertProjectVo) {
+        if (insertProjectVo.getMappingProject() != null && insertProjectVo.getResultCommit() != null) {
             insertProjectVo.getMappingProject().setCreateTime(DateUtils.getCurrentDate());
             Long longID = IdUtils.getLongID();
             insertProjectVo.getMappingProject().setId(longID);
             Integer add = super.add(insertProjectVo.getMappingProject());
-            if (add > 0){
+            if (add > 0) {
                 //项目新增成功 新增项目汇交表
                 insertProjectVo.getResultCommit().setCreateDate(new Date());
                 insertProjectVo.getResultCommit().setRefId(longID);
                 insertProjectVo.getResultCommit().setId(IdUtils.getLongID());
                 Integer integer = mappingProjectMapper.addResultCommit(insertProjectVo.getResultCommit());
-                if (integer > 0){
+                if (integer > 0) {
                     return integer;
                 }
             }
@@ -66,6 +69,19 @@ public class MappingProjectService extends BaseService<MappingProject> {
     }
 
     /**
+     * 统计所有项目信息
+     * @return
+     */
+    public List<MappingProject> selectAllProject(){
+        List<MappingProject> mappingProjects = mappingProjectMapper.selectAll();
+        if(null != mappingProjects && 0 < mappingProjects.size()){
+            return mappingProjects;
+        }
+        return null;
+    }
+
+    /**
+
      * 修改项目信息
      * @return
      */
@@ -92,4 +108,15 @@ public class MappingProjectService extends BaseService<MappingProject> {
         return integer;
     }
 
+    /**
+     * 查询项目类型
+     * @return
+     */
+    public List selectQualification(){
+        List list = mappingProjectMapper.selectQualification();
+        if(null != list && 0 < list.size()){
+            return list;
+        }
+        return null;
+    }
 }

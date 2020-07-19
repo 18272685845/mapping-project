@@ -18,7 +18,7 @@ public class DateUtils {
     /**
      * 定义日期格式
      */
-    public static final String DATE_TYPE = "yyyy-MM-dd";
+    public static final String DATE_TYPE = "yyyy-MM-dd HH:mm:ss";
 
 
     /**

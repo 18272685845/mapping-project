@@ -2,7 +2,18 @@ package com.aaa.service;
 
 import com.aaa.base.ResultData;
 import com.aaa.model.*;
+
 import com.aaa.vo.*;
+
+import com.aaa.vo.DeptVo;
+import com.aaa.vo.DictVo;
+
+import com.aaa.vo.RoleMenuVo;
+
+import com.aaa.vo.RoleSelecter;
+import com.aaa.vo.PageVo;
+import com.aaa.vo.UpdateOrAddUserVo;
+
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
@@ -126,6 +137,51 @@ public interface SpringCloudService {
     public ResultData selectPageAllUser(@RequestBody PageVo pageVo);
 
     /**
+     * 查看全部角色
+     * @return
+     */
+    @GetMapping("/selectList")
+    ResultData selectList();
+
+    /**
+     * 模糊查询
+     * @param roleSelecter
+     * @return
+     */
+    @GetMapping("/selectOne")
+    ResultData selectOne(@RequestBody RoleSelecter roleSelecter);
+
+    /**
+     * 查看详细信息
+     * @param role
+     * @return
+     */
+    @GetMapping("/selectOneBath")
+    ResultData selectOneRole(@RequestBody Role role);
+
+    /**
+     * 新增角色
+     * @param role
+     * @return
+     */
+    @PutMapping("/insert")
+    ResultData insertRole(@RequestBody Role role);
+
+
+    /**
+     * 删除角色,并将角色的权限删除
+     * @param ids
+     * @return
+     */
+
+    @PostMapping ("/deleteRole")
+    ResultData deleteRole(List<Integer> ids);
+
+
+
+
+
+    /**
      * 查询所有角色
      * @return
      */
@@ -175,7 +231,7 @@ public interface SpringCloudService {
 
 
     /**
-     *      权限
+     *      查询用户权限
      * @param userid
      * @return
      */
@@ -183,11 +239,12 @@ public interface SpringCloudService {
     ResultData selectAllPer(@RequestParam("userid") Long userid);
 
     /**
-     *  查询所有菜单
+     *      获取所有菜单
+     * @param menu
      * @return
      */
-    @GetMapping("/selectAllMenu")
-    ResultData selectAllMenu();
+    @PostMapping("/selectAllMenu")
+    ResultData selectMenuById(@RequestBody Menu menu);
 
     /**
      *      修改菜单
@@ -203,7 +260,7 @@ public interface SpringCloudService {
      * @return
      */
     @PostMapping("/insertMenu")
-    public ResultData insertMenu(@RequestBody Menu menu);
+    ResultData insertMenu(@RequestBody Menu menu);
 
     /**
      *      删除菜单
@@ -214,6 +271,7 @@ public interface SpringCloudService {
     public ResultData deleteMenu(@RequestBody List<Integer> ids);
 
     /**
+<<<<<<< HEAD
      * 根据登陆用户查询其单位信息
      * @param
      * @return
@@ -407,4 +465,55 @@ public interface SpringCloudService {
      */
     @GetMapping("/updateProjectResultsStatusById")
     public ResultData updateProjectResultsStatusById(@RequestParam("id") Long id);
+
+    /**
+     * 项目统计信息
+     * @return
+     */
+    @GetMapping("/selectAllUnit")
+    public ResultData selectAllUnit();
+
+    /**
+     * 所有单位统计信息
+     * @return
+     */
+    @GetMapping("/selectAllProject")
+    public ResultData selectAllProject();
+
+    /**
+     * 项目类型
+     */
+    @GetMapping("/selectQualification")
+    public ResultData selectQualification();
+
+    /**
+     * 查询单位资质等级
+     */
+    @GetMapping("/selectQualificationLevel")
+    public ResultData selectQualificationLevel();
+
+    /**
+     * 单位所属技术员和项目数量
+     * @return
+     */
+    @GetMapping("/selectTechnicist")
+    public ResultData selectTechnicist(Integer userId);
+
+    /**
+     * 所有单位人员设备汇总统计
+     * @return
+     */
+    @GetMapping("/selectEquipmentByUnit")
+    public ResultData selectEquipmentByUnit();
+
+    /**
+     * 修改角色权限
+     * @param roleMenuVo
+     * @return
+     */
+    @PostMapping("/updatePer")
+    ResultData updatePer(@RequestBody RoleMenuVo roleMenuVo);
+
+
+
 }

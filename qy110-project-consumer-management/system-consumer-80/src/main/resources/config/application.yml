@@ -11,6 +11,10 @@ eureka:
       defaultZone: http://localhost:7001/eureka/,http://localhost:7002/eureka/,http://localhost:7003/eureka/
 
 
+#因为FeignClient的value值必须一样，把值改为true可以解决冲突
+spring:
+  main:
+    allow-bean-definition-overriding: true
 
 #控制台打印sql
 logging:
@@ -23,3 +27,5 @@ logging:
 feign:
   hystrix:
     enabled: false
+
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 5000

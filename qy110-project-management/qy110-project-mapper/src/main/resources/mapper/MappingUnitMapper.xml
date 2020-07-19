@@ -62,4 +62,35 @@
   <select id="selectMappingUnitById" parameterType="Long" resultType="HashMap">
       select * from t_mapping_unit where user_id=#{userId}
   </select>
+  <select id="selectQualificationLevel" resultType="java.util.List">
+    select count(*),qualification_level from t_mapping_unit group by qualification_level
+  </select>
+  <select id="selectTechnicist" resultType="java.lang.Integer">
+    select count(*),major_type from t_technicist where user_id = #{userId} group by major_type
+  </select>
+  <select id="selectProjectNum" resultType="java.lang.Integer">
+    select count(*) from t_mapping_project where user_id = #{userId} group by user_id
+  </select>
+
+  <!--各个级别的单位的设备数量-->
+  <select id="selectAllEquipment" resultType="java.lang.Integer">
+
+    <if test="ownedDistrict like #{ownedDistrict}区% || ownedDistrict like #{ownedDistrict}县%">
+      select jia.num jia,yi.num yi,bing.num bing,ding.num ding,jia.tname from
+      (select count(*) num,t.name tname from (select user_id from t_mapping_unit where qualification_level = '甲级') jia,t_equipment t where jia.user_id = t.user_id group by t.name) jia,
+      (select count(*) num from (select user_id from t_mapping_unit where qualification_level = '乙级') jia,t_equipment t where jia.user_id = t.user_id group by t.name) yi,
+      (select count(*) num from (select user_id from t_mapping_unit where qualification_level = '丙级') jia,t_equipment t where jia.user_id = t.user_id group by t.name) bing,
+      (select count(*) num from (select user_id from t_mapping_unit where qualification_level = '丁级') jia,t_equipment t where jia.user_id = t.user_id group by t.name) ding group by jia.tname
+    </if>>
+  </select>
+  <!--各个资质等级的单位数量-->
+  <select id="selectAllUnit" resultType="java.lang.Integer">
+
+    select jia.num jia,yi.num yi,bing.num bing,ding.num ding,jia.m from
+(select count(*) num,qualification_level m from t_mapping_unit where qualification_level = '甲级') jia,
+(select count(*) num from t_mapping_unit where qualification_level = '乙级') yi,
+(select count(*) num from t_mapping_unit where qualification_level = '丙级') bing,
+(select count(*) num from t_mapping_unit where qualification_level = '丁级') ding
+>>>>>>> 91be2adb7bcbac5767a2a9379ee1e395db7e703b
+  </select>
 </mapper>

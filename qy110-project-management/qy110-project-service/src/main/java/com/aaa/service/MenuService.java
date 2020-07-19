@@ -14,7 +14,7 @@ public class MenuService extends BaseService<Menu> {
     private MenuMapper menuMapper;
     /**
      *      删除菜单
-     * @param id
+     * @param
      * @return
      */
     public Integer deleteMenu(List<Integer> ids){
@@ -23,5 +23,22 @@ public class MenuService extends BaseService<Menu> {
             return integer;
         }
         return  null;
+    }
+
+    /**
+     *      获取菜单信息
+     * @param menu
+     * @return
+     */
+    public List<Menu>selectMenuById(Menu menu){
+        List<Menu> menus = menuMapper.selectByParentId(menu);
+        if (menus.size() > 0 && menus != null){
+            for (Menu tmenu:menus) {
+                menu.setMENU_ID(tmenu.getMENU_ID());
+                 List<Menu> submenu = menuMapper.selectByParentId(menu);
+                 tmenu.setListMenu(submenu);
+            }
+        }
+        return menus;
     }
 }

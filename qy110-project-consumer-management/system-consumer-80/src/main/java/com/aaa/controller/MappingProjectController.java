@@ -1,6 +1,7 @@
 package com.aaa.controller;
 
 import com.aaa.base.ResultData;
+
 import com.aaa.model.MappingProject;
 import com.aaa.service.SpringCloudService;
 import com.aaa.vo.InsertProjectVo;
@@ -10,6 +11,9 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 /**
  * @Author 郭航宇
  * @Date 15:16 2020/7/18
@@ -18,8 +22,9 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/mappingProject")
-@Api(value = "项目管理模块",tags = "项目管理模块")
+@Api(value = "项目管理模块-项目统计",tags = "项目管理模块-项目统计")
 public class MappingProjectController {
+
     @Autowired
     private SpringCloudService springCloudService;
 
@@ -61,4 +66,24 @@ public class MappingProjectController {
     public ResultData updateProjectResultsStatusById(@RequestParam("id") Long id){
         return springCloudService.updateProjectResultsStatusById(id);
     }
+    /**
+     * 项目统计信息
+     * @return
+     */
+    @GetMapping("/selectAllProject")
+    @ApiOperation(value = "项目统计",notes = "<span style='color:red;'>描述：</span>项目统计")
+    public ResultData selectAllProject(){
+        return springCloudService.selectAllProject();
+    }
+
+    /**
+     * 项目类型统计信息
+     * @return
+     */
+    @GetMapping("/selectAllProject")
+    @ApiOperation(value = "项目类型统计",notes = "<span style='color:red;'>描述：</span>项目类型统计")
+    public ResultData selectQualification(){
+        return springCloudService.selectQualification();
+    }
+
 }

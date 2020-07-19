@@ -4,9 +4,11 @@ import com.aaa.base.BaseService;
 import com.aaa.base.CommonController;
 import com.aaa.base.ResultData;
 import com.aaa.model.MappingUnit;
-import com.aaa.redis.RedisService;
+
 import com.aaa.service.MappingUnitService;
-import com.aaa.vo.TokenVo;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,14 +16,18 @@ import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 
+
+import java.util.Map;
+
 /**
- * @Author 郭航宇
+ * @Author 郭航宇 LQY
  * @Date 16:05 2020/7/17
  * Description:
  * 测绘单位Controller
  **/
 @RestController
 public class MappingUnitController  extends CommonController<MappingUnit> {
+
 
     @Autowired
     private MappingUnitService mappingUnitService;
@@ -32,6 +38,7 @@ public class MappingUnitController  extends CommonController<MappingUnit> {
     }
 
     /**
+
      * 根据登陆用户查询其单位信息
      * @param
      * @return
@@ -53,15 +60,43 @@ public class MappingUnitController  extends CommonController<MappingUnit> {
      * @return
      */
     @GetMapping("/getMappingUnitByUserId")
-    public ResultData getMappingUnitByUserId(@RequestParam("userId") Long userId){
+    public ResultData getMappingUnitByUserId(@RequestParam("userId") Long userId) {
         List<HashMap> byUserId = mappingUnitService.getMappingUnitByUserId(userId);
-        if (byUserId != null && byUserId.size()>0 ){
+        if (byUserId != null && byUserId.size() > 0) {
             return selectSuccess(byUserId);
         }
         return selectFailed();
     }
 
     /**
+     * 项目统计信息
+     * @return
+     */
+    @GetMapping("/selectAllUnit")
+    public ResultData selectAllUnit(){
+        java.util.List<MappingUnit> mappingUnits = mappingUnitService.selectAllUnit();
+        if(null != mappingUnits && 0 < mappingUnits.size()){
+            return selectSuccess(mappingUnits);
+        }
+        return selectFailed();
+    }
+
+    /**
+     * 单位资质信息
+     * @return
+     */
+    @GetMapping("/selectQualificationLevel")
+    public ResultData selectQualificationLevel(){
+        List list = mappingUnitService.selectQualificationLevel();
+        if(null != list && 0 < list.size()){
+            return selectSuccess(list);
+
+        }
+        return selectFailed();
+    }
+
+    /**
+     <<<<<<< HEAD
      * 修改单位信息
      * @return
      */
@@ -87,4 +122,33 @@ public class MappingUnitController  extends CommonController<MappingUnit> {
         }
         return selectFailed();
     }
+
+    /**
+     * 单位所属技术员和项目数量
+     * @param userId
+     * @return
+     */
+    @GetMapping("/selectTechnicist")
+    public ResultData selectTechnicist(Integer userId){
+        Map selectTechnicist = mappingUnitService.selectTechnicist(userId);
+        if(null != selectTechnicist && 0 < selectTechnicist.size()){
+            return selectSuccess(selectTechnicist);
+        }
+        return selectFailed();
+    }
+
+    /**
+     * 所有单位人员设备汇总统计
+     * @return
+     */
+    @GetMapping("/selectEquipmentByUnit")
+    public ResultData selectEquipmentByUnit(){
+        Map equipmentByUnit = mappingUnitService.selectEquipmentByUnit();
+        if(null != equipmentByUnit && 0 < equipmentByUnit.size()){
+            return selectSuccess(equipmentByUnit);
+        }
+        return selectFailed();
+    }
+
+
 }

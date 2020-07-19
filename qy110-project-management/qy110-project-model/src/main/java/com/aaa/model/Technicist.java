@@ -21,6 +21,7 @@ import java.util.Date;
 @Accessors(chain = true)
 @Table(name = "t_technicist")
 public class Technicist implements Serializable {
+
     /**
      * 编号
      */

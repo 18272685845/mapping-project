@@ -46,9 +46,10 @@
     <result column="address" property="address" jdbcType="VARCHAR" />
     <result column="center_point" property="centerPoint" jdbcType="VARCHAR" />
     <result column="synchronization_status" property="synchronizationStatus" jdbcType="INTEGER" />
-    <result column="contract_time" property="contractTime" jdbcType="VARCHAR" />
+    <result column="contract_time" property="completeTime" jdbcType="VARCHAR" />
     <result column="coordinate" property="coordinate" jdbcType="LONGVARCHAR" />
   </resultMap>
+
   <insert id="addResultCommit" parameterType="com.aaa.model.ResultCommit">
       insert into t_result_commit(id,plotting_scale,coordinate,result_date,name,create_date,height_datum,memo,ref_id,meridian)
        values (#{id},#{plotting_scale},#{coordinate},#{result_date},#{name},#{create_date},#{height_datum},#{memo},#{ref_id},#{meridian})
@@ -57,4 +58,8 @@
   <update id="updateProjectResultsStatusById" parameterType="Long">
       update t_mapping_project set results_status=2 where id=#{id}
   </update>
+
+    <select id="selectQualification" resultType="java.util.List">
+      select project_type,status from t_mapping_project
+    </select>
 </mapper>

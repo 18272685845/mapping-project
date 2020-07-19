@@ -25,13 +25,15 @@ spring:
   application:
     name: springcloud-provider
 
-
+#  main:
+#    allow-bean-definition-overriding: true
 
 #mybatis相关配置
 mybatis:
   type-aliases-package: com.aaa.model
   #指定mapper映射文件
   mapper-locations: classpath:mapper/*.xml
+
 
 #Eureka的配置，服务注册到哪里
 eureka:
@@ -73,3 +75,7 @@ pagehelper:
   reasonable: false
   support-methods-arguments: true
   params: count=countsql
+
+#解决了负载平衡器没有为客户端提供可用的服务器的问题
+ribbon.eureka.enable: true
+logging.level.com.aaa.mapper: debug

@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @author 王登辉
  * @date 2020/7/16
- *
+ *    查询用户权限
 **/
 @RestController
 public class PerController extends BaseController {

@@ -265,4 +265,5 @@ public class MappingProject implements Serializable {
      */
     private String coordinate;
 
+
 }

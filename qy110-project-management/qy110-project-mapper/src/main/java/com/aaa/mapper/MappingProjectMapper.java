@@ -4,8 +4,11 @@ import com.aaa.model.MappingProject;
 import com.aaa.model.ResultCommit;
 import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
+
+
+import java.util.List;
 /**
- * @Author 郭航宇
+ * @Author 郭航宇 LQY
  * @Date 14:50 2020/7/18
  * Description:
  **/
@@ -21,4 +24,10 @@ public interface MappingProjectMapper extends Mapper<MappingProject> {
      * @return
      */
     public Integer updateProjectResultsStatusById(Long id);
+
+    /**
+     * 项目类型
+     */
+    List selectQualification();
+
 }

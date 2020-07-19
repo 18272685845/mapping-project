@@ -11,4 +11,23 @@
     <result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
     <result column="MODIFY_TIME" property="modifyTime" jdbcType="DATE" />
   </resultMap>
+  <delete id="deleteBathRole"  parameterType="java.util.List" >
+      DELETE FROM t_role WHERE ROLE_ID IN
+      <foreach collection="list" item="role" index="index" separator="," open="(" close=")" >
+            #{role}
+      </foreach>
+  </delete>
+  <select id="selectByNameOrTime" resultType="com.aaa.model.Role" parameterType="com.aaa.vo.RoleSelecter">
+      select * from t_role where 1=1
+      <if test="roleName != null" >
+        and ROLE_NAME like '%${roleName}%'
+      </if>
+      <if test="startTime != null">
+        <if test="endTime != null">
+          <if test="roleName != null">
+            unix_timestamp(CREATE_TIME) BETWEEN unix_timestamp(#{startTime}) and unix_timestamp(#{endTime})
+          </if>
+        </if>
+      </if>
+    </select>
 </mapper>
