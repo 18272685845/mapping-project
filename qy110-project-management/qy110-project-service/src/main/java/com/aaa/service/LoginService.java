@@ -1,14 +1,22 @@
 package com.aaa.service;
 
-import com.aaa.annotation.LoginAnnotation;
+
 import com.aaa.base.BaseService;
 import com.aaa.mapper.UserMapper;
 import com.aaa.model.User;
+import com.aaa.redis.RedisService;
 import com.aaa.vo.TokenVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
+
+import static com.aaa.status.RedisFlag.*;
+/**
+ * @Author 郭航宇
+ * @Date 15:55 2020/7/17
+ * Description:
+ **/
 
 @Service
 public class LoginService extends BaseService<User> {
@@ -24,7 +32,7 @@ public class LoginService extends BaseService<User> {
      * @param user
      * @return
      */
-    public TokenVo doLogin(User user){
+    public TokenVo doLogin(User user ,RedisService redisService){
         TokenVo tokenVo=new TokenVo();
         User user1=new User();
         //判断user是否为null
@@ -48,12 +56,25 @@ public class LoginService extends BaseService<User> {
                     //密码正确 登陆成功
                     String token = UUID.randomUUID().toString().replaceAll("-","");
                     user3.setToken(token);
+
+                    //获取用户id作为redisKey
+                    String redisKey = String.valueOf(user3.getId());
+                    System.out.println(redisKey);
+
                     //将token存入数据库user表中
                     Integer update = super.update(user3);
-                    if (update>0){
-                        //存入成功
-                        tokenVo.setIfSuccess(true).setToken(token);
+                    if (update>0){ //token存入数据库成功
+                        //先将rediskey和token存入redis中，因为uuid是会变的，需要每次覆盖token，所以使用xx
+                        String oneSet = redisService.set(redisKey, token);
+                        if (RESULT_REDIS.equals(oneSet.toUpperCase())){
 
+                            //第一次存入成功，再次进行set，使用xx
+                            String twoSet = redisService.set(redisKey, token, "xx", "ex", 1800);
+                            if (RESULT_REDIS.equals(twoSet.toUpperCase())){
+                                //存入成功
+                                tokenVo.setIfSuccess(true).setToken(token).setRedisKey(String.valueOf(user3.getId()));
+                            }
+                        }
                     }else {
                         tokenVo.setIfSuccess(false).setType(4);
                         return tokenVo;
