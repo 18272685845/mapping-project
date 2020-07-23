@@ -31,12 +31,22 @@ public class MenuService extends BaseService<Menu> {
      * @return
      */
     public List<Menu>selectMenuById(Menu menu){
+        //查询一级菜单
         List<Menu> menus = menuMapper.selectByParentId(menu);
         if (menus.size() > 0 && menus != null){
-            for (Menu tmenu:menus) {
-                menu.setMENU_ID(tmenu.getMENU_ID());
+            for (Menu oneMenu:menus) {
+                menu.setMENU_ID(oneMenu.getMENU_ID());
+                //查询二级菜单
                  List<Menu> submenu = menuMapper.selectByParentId(menu);
-                 tmenu.setListMenu(submenu);
+                 if (submenu.size() > 0 && submenu != null){
+                    for (Menu twoMenu:submenu) {
+                        menu.setMENU_ID(twoMenu.getMENU_ID());
+                        //查询三级菜单
+                        List<Menu> menus1 = menuMapper.selectByParentId(menu);
+                        twoMenu.setListMenu(menus1);
+                    }
+                 }
+                 oneMenu.setListMenu(submenu);
             }
         }
         return menus;

@@ -315,5 +315,42 @@ public interface SpringCloudService {
     @PostMapping("/updatePer")
     ResultData updatePer(@RequestBody RoleMenuVo roleMenuVo);
 
+    /**
+     *      抽查分页查询
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @GetMapping("/selectByRound")
+    ResultData selectByRound(@RequestParam("pageNum") Integer pageNum,@RequestParam("pageSize") Integer pageSize);
 
+    /**
+     *      抽查表初始化
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @GetMapping("/selectByRounds")
+    ResultData selectByRounds(@RequestParam("address") String address,@RequestParam("scale") Double scale,@RequestParam("pageNum") Integer pageNum,@RequestParam("pageSize") Integer pageSize);
+    /**
+     *      白名单
+     * @return
+     */
+    @GetMapping("/selectByWhite")
+    ResultData selectByWhite();
+
+
+    /**
+     *      黑名单
+     * @return
+     */
+    @GetMapping("/selectByBlack")
+    ResultData selectByBlack();
+
+    /**
+     *      信息公开
+     * @return
+     */
+    @GetMapping("/selectAllNews")
+    ResultData selectAllNews();
 }

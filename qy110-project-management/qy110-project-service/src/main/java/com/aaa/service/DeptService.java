@@ -10,7 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+/**
+ * @author 王登辉
+ * @date 2020/7/23
+ * 
+**/
 @Service
 public class DeptService extends BaseService <Dept>{
 

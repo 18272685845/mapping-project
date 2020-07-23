@@ -89,4 +89,13 @@
 (select count(*) num from t_mapping_unit where qualification_level = '丙级') bing,
 (select count(*) num from t_mapping_unit where qualification_level = '丁级') ding
   </select>
+  <select id="selectByRound" resultMap="BaseResultMap">
+    SELECT * FROM t_mapping_unit where qualification_level='丙级' or qualification_level='丁级'
+  </select>
+  <select id="selectByWhite" resultMap="BaseResultMap">
+    SELECT * FROM t_mapping_unit where score>100
+  </select>
+  <select id="selectByBlack" resultMap="BaseResultMap">
+    SELECT * FROM t_mapping_unit where  60 > score
+  </select>
 </mapper>

@@ -44,4 +44,21 @@ public interface MappingUnitMapper extends Mapper<MappingUnit> {
      */
     List<Integer> selectAllUnit();
 
+    /**
+     *      双随机抽查
+     * @return
+     */
+    List<MappingUnit> selectByRound();
+
+    /**
+     *      白名单
+     * @return
+     */
+    List<MappingUnit> selectByWhite();
+
+    /**
+     *      白名单
+     * @return
+     */
+    List<MappingUnit> selectByBlack();
 }

@@ -35,7 +35,7 @@ public class MappingProjectController {
      * 项目类型统计信息
      * @return
      */
-    @GetMapping("/selectAllProject")
+    @GetMapping("/selectQualification")
     @ApiOperation(value = "项目类型统计",notes = "<span style='color:red;'>描述：</span>项目类型统计")
     public ResultData selectQualification(){
         return springCloudService.selectQualification();

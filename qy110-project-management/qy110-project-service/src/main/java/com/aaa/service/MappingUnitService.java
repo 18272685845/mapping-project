@@ -3,11 +3,12 @@ package com.aaa.service;
 import com.aaa.base.BaseService;
 import com.aaa.mapper.MappingUnitMapper;
 import com.aaa.model.MappingUnit;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -16,6 +17,12 @@ import java.util.Map;
  */
 @Service
 public class MappingUnitService extends BaseService<MappingUnit> {
+
+    public static List<MappingUnit> list;
+
+    public static void setList(List<MappingUnit> list) {
+        MappingUnitService.list = list;
+    }
 
     @Autowired
     private MappingUnitMapper mappingUnitMapper;
@@ -76,4 +83,58 @@ public class MappingUnitService extends BaseService<MappingUnit> {
         return null;
     }
 
+    /**
+     *      双随机抽查
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    public List<MappingUnit> selectByRound(String address,Double scale,Integer pageNum,Integer pageSize){
+        if (list == null || list.isEmpty()){
+            List<MappingUnit> mappingUnits = mappingUnitMapper.selectByRound();
+            if (mappingUnits.size() > 0 && mappingUnits != null){
+                    if (scale == 1 ){
+                        Collections.shuffle(mappingUnits);
+                        list=mappingUnits;
+                    }
+                    if (scale > 0 && scale < 1){
+                        Collections.shuffle(mappingUnits);
+                        int size = mappingUnits.size();
+                        long round = Math.round(size * scale);
+                        ArrayList arrayList=new ArrayList();
+                        for (int j = 0;j < round; j++){
+                            arrayList.add(mappingUnits.get(j));
+                        }
+                        list=arrayList;
+                    }
+                return list;
+            }
+        }
+        return null;
+    }
+
+    /**
+     *      白名单
+     * @return
+     */
+    public List<MappingUnit> selectByWhite(){
+        List<MappingUnit> mappingUnits = mappingUnitMapper.selectByWhite();
+        if ( mappingUnits.size() > 0 && mappingUnits !=null ){
+            return mappingUnits;
+        }else {
+            return null;
+        }
+    }
+    /**
+     *      黑名单
+     * @return
+     */
+    public List<MappingUnit> selectByBlack(){
+        List<MappingUnit> mappingUnits = mappingUnitMapper.selectByBlack();
+        if ( mappingUnits.size() > 0 && mappingUnits !=null ){
+            return mappingUnits;
+        }else {
+            return null;
+        }
+    }
 }

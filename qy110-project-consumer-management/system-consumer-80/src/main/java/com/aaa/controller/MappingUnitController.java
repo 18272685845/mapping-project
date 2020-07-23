@@ -1,13 +1,12 @@
 package com.aaa.controller;
 
 import com.aaa.base.ResultData;
+import com.aaa.model.MappingUnit;
 import com.aaa.service.SpringCloudService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -62,4 +61,34 @@ public class MappingUnitController {
     public ResultData selectEquipmentByUnit(){
         return springCloudService.selectEquipmentByUnit();
     }
+
+    /**
+     *      白名单
+     * @return
+     */
+
+
+    /**
+     *      抽查分页查询
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @GetMapping("/selectByRound")
+    @ApiOperation(value = "双随机抽查",notes = "<span style='color:red;'>描述：</span>双随机抽查")
+    public ResultData selectByRound(@RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize){
+        return springCloudService.selectByRound(pageNum,pageSize);
+    }
+
+    /**
+     *      抽查表初始化
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @GetMapping("/selectByRounds")
+    public ResultData selectByRounds(@RequestParam String address,@RequestParam Double scale,@RequestParam Integer pageNum,@RequestParam Integer pageSize){
+        return springCloudService.selectByRounds(address,scale,pageNum,pageSize);
+    }
 }
+

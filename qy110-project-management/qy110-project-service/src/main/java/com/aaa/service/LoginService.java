@@ -1,6 +1,4 @@
 package com.aaa.service;
-
-import com.aaa.annotation.LoginAnnotation;
 import com.aaa.base.BaseService;
 import com.aaa.mapper.UserMapper;
 import com.aaa.model.User;

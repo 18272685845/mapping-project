@@ -5,9 +5,9 @@ import com.aaa.base.CommonController;
 import com.aaa.base.ResultData;
 import com.aaa.model.MappingUnit;
 import com.aaa.service.MappingUnitService;
+import com.aaa.utils.PageInfoRandom;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -78,6 +78,37 @@ public class MappingUnitController extends CommonController<MappingUnit> {
             return selectSuccess(equipmentByUnit);
         }
         return selectFailed();
+    }
+
+
+
+    /**
+     *      抽查分页查询
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @GetMapping("/selectByRound")
+    public ResultData selectByRoundLimit(@RequestParam Integer pageNum,@RequestParam Integer pageSize){
+        PageInfoRandom pageInfoRandom=new PageInfoRandom<>(mappingUnitService.list,pageNum,pageSize);
+        return selectSuccess(pageInfoRandom);
+    }
+    /**
+     *      抽查表初始化
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @GetMapping("/selectByRounds")
+    public ResultData selectByRoundsInit(@RequestParam String address,@RequestParam Double scale,@RequestParam Integer pageNum,@RequestParam Integer pageSize){
+        mappingUnitService.setList(null);
+        List<MappingUnit> mappingUnits = mappingUnitService.selectByRound(address, scale, pageNum, pageSize);
+        if (mappingUnits.size() > 0 && mappingUnits != null){
+            PageInfoRandom pageInfo = new PageInfoRandom<>(mappingUnits,pageNum,pageSize);
+            return selectSuccess(pageInfo);
+        }else {
+            return selectFailedZ();
+        }
     }
 
 }

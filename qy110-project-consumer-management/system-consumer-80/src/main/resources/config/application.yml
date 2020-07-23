@@ -28,4 +28,11 @@ feign:
   hystrix:
     enabled: false
 
+  client:
+    config:
+      default:
+        read-timeout: 50000
+        connect-timeout: 50000
+
+
 hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 5000
