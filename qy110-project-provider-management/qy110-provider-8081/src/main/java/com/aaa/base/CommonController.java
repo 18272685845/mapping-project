@@ -41,6 +41,7 @@ public abstract class CommonController<T> extends BaseController {
      * 查询方法
      * @return
      */
+    @Override
     public ResultData selectAll(){
         List<T> selectAll = getBaseService().selectAll();
         if (selectAll!=null){

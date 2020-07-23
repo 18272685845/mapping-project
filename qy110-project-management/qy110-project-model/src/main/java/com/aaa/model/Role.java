@@ -8,6 +8,10 @@ import lombok.experimental.Accessors;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+/**
+ * @auther LQY
+ * @date 2020-07-18
+ **/
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

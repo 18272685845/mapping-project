@@ -6,6 +6,10 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+/**
+ * @auther LQY
+ * @date 2020-07-18
+ **/
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

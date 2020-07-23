@@ -2,19 +2,13 @@ package com.aaa.service;
 
 import com.aaa.base.ResultData;
 import com.aaa.model.*;
-import com.aaa.vo.DeptVo;
-import com.aaa.vo.DictVo;
-
-import com.aaa.vo.RoleMenuVo;
-
-import com.aaa.vo.RoleSelecter;
-import com.aaa.vo.PageVo;
-import com.aaa.vo.UpdateOrAddUserVo;
+import com.aaa.vo.*;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -173,10 +167,6 @@ public interface SpringCloudService {
     @PostMapping ("/deleteRole")
     ResultData deleteRole(List<Integer> ids);
 
-
-
-
-
     /**
      * 查询所有角色
      * @return
@@ -267,8 +257,8 @@ public interface SpringCloudService {
     public ResultData deleteMenu(@RequestBody List<Integer> ids);
 
     /**
-<<<<<<< HEAD
      * 项目统计信息
+     *      项目审核模块中项目信息，汇交成果信息、项目审核、成果汇交审核也是这个
      * @return
      */
     @GetMapping("/selectAllUnit")
@@ -282,7 +272,7 @@ public interface SpringCloudService {
     public ResultData selectAllProject();
 
     /**
-     * 项目类型
+     * 项目类型统计
      */
     @GetMapping("/selectQualification")
     public ResultData selectQualification();
@@ -298,7 +288,7 @@ public interface SpringCloudService {
      * @return
      */
     @GetMapping("/selectTechnicist")
-    public ResultData selectTechnicist(Integer userId);
+    public ResultData selectTechnicist(@RequestParam("userId") Integer userId);
 
     /**
      * 所有单位人员设备汇总统计
@@ -315,5 +305,76 @@ public interface SpringCloudService {
     @PostMapping("/updatePer")
     ResultData updatePer(@RequestBody RoleMenuVo roleMenuVo);
 
+    /**
+     * 根据项目姓名进行查询
+     *      项目审核模块中项目信息，汇交成果信息、项目审核、成果汇交审核也是这个
+     * @param name
+     * @return
+     */
+    @GetMapping("/selectProjectByName")
+    public ResultData selectProjectByName(@RequestParam("name") String name);
 
+    /**
+     * 根据用户编号查找本单位的附件
+     * @param number
+     * @return
+     */
+    @GetMapping("/selectResourceByNum")
+    public ResultData selectResourceByNum(@RequestParam("number") String number);
+
+    /**
+     * 根据用户编号查找汇交结果
+     * @param num
+     * @return
+     */
+    @GetMapping("/selectResultCommitByNum")
+    public ResultData selectResultCommitByNum(@RequestParam("num") String num);
+
+    /**
+     * 根据用户编号查找审核记录
+     * @param num
+     * @return
+     */
+    @GetMapping("/selectAuditByNum")
+    public ResultData selectAuditByNum(@RequestParam("num") String num);
+
+    /**
+     * 单位审核中：单位列表
+     * 根据单位名称进行查询
+     * @param name
+     * @return
+     */
+    @GetMapping("/selectOneUnitByName")
+    public ResultData selectOneUnitByName(@RequestParam("name") String name);
+
+    /**
+     * 单位修改待审核、单位注册待审核
+     * @param status 2:单位修改待审核  3:单位修改待审核
+     * @param name  根据姓名进行模糊查询
+     * @return
+     */
+    @GetMapping("/selectUnitByAuditStatus")
+    public ResultData selectUnitByAuditStatus(@RequestParam("name") String name,@RequestParam("status") String status);
+
+    /**
+     * 根据单位的编号查找评分记录
+     * @param num
+     * @return
+     */
+    @GetMapping("/selectListScore")
+    public ResultData selectListScore(@RequestParam("num") String num);
+
+    /**
+     * 插入评分记录
+     * @param id 评分记录编号
+     * @param scoreNum 要加减的分数值
+     * @param score 当前分数值
+     * @param unitId 关联单位的id
+     * @param reason 备注
+     * @param createTime 创建时间
+     * @param status 根据这个状态判断加分减分  0:加分  1:减分
+     * @return
+     */
+    @PostMapping("/insertScore")
+    public ResultData insertScore(@RequestBody ScoreVo scoreVo);
 }

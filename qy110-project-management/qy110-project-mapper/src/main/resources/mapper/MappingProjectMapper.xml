@@ -49,7 +49,14 @@
     <result column="contract_time" property="contractTime" jdbcType="VARCHAR" />
     <result column="coordinate" property="coordinate" jdbcType="LONGVARCHAR" />
   </resultMap>
-    <select id="selectQualification" resultType="java.util.List">
-      select project_type,status from t_mapping_project
+    <select id="selectQualification" resultType="java.util.HashMap">
+      select a.nu anu,a.status astatus,b.nu bnu,b.status bstatus,c.nu cnu,c.status cstatus,d.nu dnu,d.status dstatus from
+(select count(*) nu,status from t_mapping_project where status = 2 and project_type='基础测绘') a,
+(select count(*) nu,status from t_mapping_project where status = 3 and project_type='基础测绘') b,
+(select count(*) nu,status from t_mapping_project where status = 2 and project_type='专业测绘') c,
+(select count(*) nu,status from t_mapping_project where status = 3 and project_type='专业测绘') d
+    </select>
+    <select id="selectProjectByName" resultType="com.aaa.model.MappingProject">
+      select * from t_mapping_project where project_name = #{name}
     </select>
 </mapper>

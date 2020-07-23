@@ -25,9 +25,6 @@ public class RoleController extends CommonController<Role> {
     @Autowired
     private RoleService roleService;
 
-    @Autowired
-    private RoleMenuService roleMenuService;
-
     @Override
     public BaseService<Role> getBaseService() {
         return roleService;
