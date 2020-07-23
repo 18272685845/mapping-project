@@ -456,7 +456,7 @@ public class BaseController {
      * 查询成功，返回系统消息
      * @return
      */
-    protected ResultData selectAll(){
+    protected ResultData selectAllRole(){
         ResultData resultData = new ResultData();
         resultData.setCode(SELECT_SUCCESS.getCode());
         resultData.setCode(SELECT_SUCCESS.getMsg());

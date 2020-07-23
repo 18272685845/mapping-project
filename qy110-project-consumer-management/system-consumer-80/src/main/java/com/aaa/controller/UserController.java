@@ -97,7 +97,6 @@ public class UserController {
      * @return
      */
     @GetMapping("/getUserSsex")
-    @ApiOperation(value = "获取用户字典表性别值",notes = "<span style='color:red;'>描述：</span>获取用户字典表性别值")
     public ResultData getUserSsex(){
         return springCloudService.getUserSsex();
     }

@@ -37,15 +37,6 @@ public class RedisService<T> {
     private JedisCluster jedisCluster;
 
     /**
-     * 向redis中放值
-     * @param key
-     * @param value
-     * @return
-     */
-    public String set(String key,String value){
-        return jedisCluster.set(key, JSONUtils.toJsonString(value));
-    }
-    /**
      * 向redis存入数据
      * @param key
      * @param value

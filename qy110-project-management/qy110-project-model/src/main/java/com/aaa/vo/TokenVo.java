@@ -25,8 +25,4 @@ public class TokenVo {
      * 4.系统异常
      */
     private Integer type;
-    /**
-     * token在redis中的key值
-     */
-    private String redisKey;
 }

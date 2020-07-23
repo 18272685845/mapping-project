@@ -69,7 +69,7 @@ public class LogAspect {
         //1.获取Ip地址
         String ipAddr = IPUtils.getIpAddr(request);
         System.out.println(ipAddr);
-        if (ipAddr.equals("127.0.0.1")){
+        if (!ipAddr.equals("")){
             ipAddr="1.199.72.136";
         }
         //2.获取地理位置

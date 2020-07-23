@@ -118,7 +118,7 @@ public class FtpUtils {
                     "ftpuser",
                     "4593138",
                     "/home/ftp/",
-                    "2020/07/22",
+                    "2020/07/10",
                     "songYiRen.jpg",
                     inputStream);
             System.out.println(upload);

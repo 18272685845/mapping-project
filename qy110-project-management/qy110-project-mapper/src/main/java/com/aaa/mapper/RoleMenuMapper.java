@@ -6,7 +6,6 @@ import com.aaa.model.RoleMenu;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
@@ -16,7 +15,6 @@ import java.util.List;
  * @date 2020/7/17
  *      角色权限的修改
 **/
-@Repository
 public interface RoleMenuMapper extends Mapper<RoleMenu> {
     /**
      *      删除所有权限

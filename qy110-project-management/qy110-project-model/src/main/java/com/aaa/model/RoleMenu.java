@@ -8,10 +8,6 @@ import lombok.experimental.Accessors;
 import javax.persistence.Column;
 import javax.persistence.Table;
 
-/**
- * @auther LQY
- * @date 2020-07-18
- **/
 @Data
 @Accessors(chain = true)
 @AllArgsConstructor
