@@ -9,6 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+/**
+ * @Author 郭航宇
+ * @Date 16:07 2020/7/17
+ * Description:
+ **/
 
 @Service
 public class TDictService  extends BaseService<Dict> {

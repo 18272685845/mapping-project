@@ -46,10 +46,42 @@
     <result column="address" property="address" jdbcType="VARCHAR" />
     <result column="center_point" property="centerPoint" jdbcType="VARCHAR" />
     <result column="synchronization_status" property="synchronizationStatus" jdbcType="INTEGER" />
-    <result column="contract_time" property="contractTime" jdbcType="VARCHAR" />
+    <result column="contract_time" property="completeTime" jdbcType="VARCHAR" />
     <result column="coordinate" property="coordinate" jdbcType="LONGVARCHAR" />
   </resultMap>
-    <select id="selectQualification" resultType="java.util.List">
-      select project_type,status from t_mapping_project
+    <select id="selectQualification" resultType="java.util.HashMap">
+      select a.nu anu,a.status astatus,b.nu bnu,b.status bstatus,c.nu cnu,c.status cstatus,d.nu dnu,d.status dstatus from
+(select count(*) nu,status from t_mapping_project where status = 2 and project_type='基础测绘') a,
+(select count(*) nu,status from t_mapping_project where status = 3 and project_type='基础测绘') b,
+(select count(*) nu,status from t_mapping_project where status = 2 and project_type='专业测绘') c,
+(select count(*) nu,status from t_mapping_project where status = 3 and project_type='专业测绘') d
     </select>
+    <select id="selectProjectByName" resultType="com.aaa.model.MappingProject">
+      select * from t_mapping_project where project_name = #{name}
+  </select>
+  <select id="selectMappingProjectByProjectNameAndProjectTypeAndStartDate" resultType="java.util.Map" >
+      select project_name from t_mapping_project
+      <where>
+        <if test="projectName != null">
+          and project_name like concat('%',#{projectName},'%')
+        </if>
+        <if test="projectType != null">
+          and project_type=#{projectType}
+        </if>
+        <if test="startDate != null">
+          and start_date=#{startDate}
+        </if>
+      </where>
+  </select>
+<select id="selectMappingProjectByProjectName" resultMap="BaseResultMap">
+  select * from t_mapping_project where project_name=#{projectName}
+</select>
+  <insert id="addResultCommit" parameterType="com.aaa.model.ResultCommit">
+      insert into t_result_commit(id,plotting_scale,coordinate,result_date,name,create_date,height_datum,memo,ref_id,meridian)
+       values (#{id},#{plotting_scale},#{coordinate},#{result_date},#{name},#{create_date},#{height_datum},#{memo},#{ref_id},#{meridian})
+  </insert>
+
+  <update id="updateProjectResultsStatusById" parameterType="Long">
+      update t_mapping_project set results_status=2 where id=#{id}
+  </update>
 </mapper>
