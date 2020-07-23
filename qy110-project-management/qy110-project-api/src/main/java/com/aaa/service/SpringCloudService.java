@@ -612,7 +612,7 @@ public interface SpringCloudService {
      */
     @GetMapping("/selectAllNews")
     ResultData selectAllNews();
-=======
+    /**
      * 单位审核中：单位列表
      * 根据单位名称进行查询
      * @param name
@@ -651,5 +651,5 @@ public interface SpringCloudService {
      */
     @PostMapping("/insertScore")
     public ResultData insertScore(@RequestBody ScoreVo scoreVo);
->>>>>>> 51fda736d2185a75571285cd6ef66f2bae538e31
+
 }
