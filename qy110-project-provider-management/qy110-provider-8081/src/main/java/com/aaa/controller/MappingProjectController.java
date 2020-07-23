@@ -4,17 +4,26 @@ import com.aaa.base.BaseService;
 import com.aaa.base.CommonController;
 import com.aaa.base.ResultData;
 import com.aaa.model.MappingProject;
+import com.aaa.model.ResultCommit;
 import com.aaa.service.MappingProjectService;
 
+import com.aaa.service.ResourceService;
+import com.aaa.service.ResultCommitService;
+import com.aaa.service.UploadService;
 import com.aaa.vo.InsertProjectVo;
 import com.aaa.vo.MappingProjectVo;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
+import java.util.Map;
+
 /**
  * @Author 郭航宇 LQY
  * @Date 15:10 2020/7/18
@@ -25,11 +34,60 @@ public class MappingProjectController extends CommonController<MappingProject> {
 
     @Autowired
     private MappingProjectService mappingProjectService;
+
+    @Autowired
+    private ResourceService resourceService;
+
+    @Autowired
+    private ResultCommitService resultCommitService;
+
+    @Autowired
+    private UploadService uploadService;
+
     @Override
     public BaseService<MappingProject> getBaseService() {
         return mappingProjectService;
     }
-
+    /**
+     * 首页模糊查询
+     * @param projectName
+     * @param projectType
+     * @param startDate
+     * @return
+     */
+    @GetMapping("/selectMappingProjectByProjectNameAndProjectTypeAndStartDate")
+    public  ResultData selectMappingProjectByProjectNameAndProjectTypeAndStartDate(@RequestParam("projectName") String projectName,@RequestParam("projectType") String projectType,@RequestParam("startDate") String startDate){
+        List<Map<String, Object>> mapList = mappingProjectService.selectMappingProjectByProjectNameAndProjectTypeAndStartDate(projectName, projectType, startDate);
+        if (mapList != null){
+            return selectSuccess(mapList);
+        }
+        return selectFailed();
+    }
+    /**
+     * 模糊查询的下拉框数据  测绘类型
+     * @return
+     */
+    @GetMapping("/selectProjectType")
+    public ResultData selectProjectType(){
+        List<Map<String, Object>> mapList = mappingProjectService.selectProjectType();
+        if (mapList !=null){
+            return selectSuccess(mapList);
+        }
+        return selectFailed();
+    }
+    /**
+     * 通过名字查询项目
+     * @param projectName
+     * @return
+     */
+    @GetMapping("/selectMappingProjectByProjectName")
+    public ResultData selectMappingProjectByProjectName(@RequestParam("projectName") String projectName){
+        MappingProject project = mappingProjectService.selectMappingProjectByProjectName(projectName);
+        if (project != null){
+            return selectSuccess(project);
+        }
+        return selectFailed();
+    }
     /**
      * 带条件查询的 分页查询项目信息
      * @param mappingProjectVo
@@ -47,14 +105,28 @@ public class MappingProjectController extends CommonController<MappingProject> {
      * 新增项目信息
      * @return
      */
-    @PostMapping("/insertMappingProject")
-    public ResultData insertMappingProject(@RequestBody InsertProjectVo insertProjectVo){
-        Integer integer = mappingProjectService.insertMappingProject(insertProjectVo);
-        if (integer > 0){
-            return insertRoleSuccess();
+    @PostMapping(value = "/insertMappingProject", consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResultData insertMappingProject( MappingProject mappingProject, ResultCommit resultCommit, MultipartFile[] multipartFile, String refBizType){
+
+        try {
+            Long integer = mappingProjectService.insertMappingProject(mappingProject);
+            if (integer > 0){
+                Boolean aBoolean = mappingProjectService.beforeToDo(multipartFile, refBizType,resourceService, integer);
+                if (aBoolean){
+                    Integer commit = resultCommitService.insertResultCommit(resultCommit, integer);
+                    if (commit>0){
+                        return insertRoleSuccess();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return insertRoleFailed();
     }
+
+
     /**
      * 修改项目信息
      * @return

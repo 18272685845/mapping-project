@@ -49,7 +49,23 @@
     <result column="contract_time" property="completeTime" jdbcType="VARCHAR" />
     <result column="coordinate" property="coordinate" jdbcType="LONGVARCHAR" />
   </resultMap>
-
+  <select id="selectMappingProjectByProjectNameAndProjectTypeAndStartDate" resultType="java.util.Map" >
+      select project_name from t_mapping_project
+      <where>
+        <if test="projectName != null">
+          and project_name like concat('%',#{projectName},'%')
+        </if>
+        <if test="projectType != null">
+          and project_type=#{projectType}
+        </if>
+        <if test="startDate != null">
+          and start_date=#{startDate}
+        </if>
+      </where>
+  </select>
+<select id="selectMappingProjectByProjectName" resultMap="BaseResultMap">
+  select * from t_mapping_project where project_name=#{projectName}
+</select>
   <insert id="addResultCommit" parameterType="com.aaa.model.ResultCommit">
       insert into t_result_commit(id,plotting_scale,coordinate,result_date,name,create_date,height_datum,memo,ref_id,meridian)
        values (#{id},#{plotting_scale},#{coordinate},#{result_date},#{name},#{create_date},#{height_datum},#{memo},#{ref_id},#{meridian})

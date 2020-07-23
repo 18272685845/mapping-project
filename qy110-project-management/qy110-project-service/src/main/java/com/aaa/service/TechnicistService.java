@@ -70,4 +70,6 @@ public class TechnicistService extends BaseService<Technicist> {
         return null;
     }
 
+
+
 }

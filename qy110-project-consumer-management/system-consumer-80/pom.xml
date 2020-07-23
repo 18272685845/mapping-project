@@ -10,14 +10,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>system-consumer-80</artifactId>
+
     <dependencies>
+        <!--thymeleaf模板jar包-->
         <dependency>
-            <groupId>com.aaa</groupId>
-            <artifactId>qy110-project-service</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
     </dependencies>
-
 
 </project>

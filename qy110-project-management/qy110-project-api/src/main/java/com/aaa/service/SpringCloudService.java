@@ -15,8 +15,10 @@ import com.aaa.vo.PageVo;
 import com.aaa.vo.UpdateOrAddUserVo;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import java.util.List;
@@ -271,7 +273,6 @@ public interface SpringCloudService {
     public ResultData deleteMenu(@RequestBody List<Integer> ids);
 
     /**
-<<<<<<< HEAD
      * 根据登陆用户查询其单位信息
      * @param
      * @return
@@ -445,12 +446,17 @@ public interface SpringCloudService {
     @PostMapping("/selectMappingProjectByPage")
     public ResultData selectMappingProjectByPage(@RequestBody MappingProjectVo mappingProjectVo);
 
-    /**
-     * 新增项目信息
-     * @return
-     */
-    @PostMapping("/insertMappingProject")
-    public ResultData insertMappingProject(@RequestBody InsertProjectVo insertProjectVo);
+//    /**
+//     * 新增项目信息，文件上传
+//     * @param mappingProject
+//     * @param resultCommit
+//     * @param multipartFile
+//     * @param refBizType
+//     * @return
+//     */
+//    @PostMapping(value = "/insertMappingProject", consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+//            produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResultData insertMappingProject(@RequestBody MappingProject mappingProject,@RequestBody ResultCommit resultCommit,@RequestBody MultipartFile[] multipartFile,@RequestParam("refBizType") String refBizType);
     /**
      * 修改项目信息
      * @return
@@ -513,7 +519,28 @@ public interface SpringCloudService {
      */
     @PostMapping("/updatePer")
     ResultData updatePer(@RequestBody RoleMenuVo roleMenuVo);
-
+    /**
+     * 首页模糊查询
+     * @param projectName
+     * @param projectType
+     * @param startDate
+     * @return
+     */
+    @GetMapping("/selectMappingProjectByProjectNameAndProjectTypeAndStartDate")
+    public  ResultData selectMappingProjectByProjectNameAndProjectTypeAndStartDate(@RequestParam("projectName") String projectName,@RequestParam("projectType") String projectType,@RequestParam("startDate") String startDate);
+    /**
+     * 通过名字查询项目
+     * @param projectName
+     * @return
+     */
+    @GetMapping("/selectMappingProjectByProjectName")
+    public ResultData selectMappingProjectByProjectName(@RequestParam("projectName") String projectName);
+    /**
+     * 模糊查询的下拉框数据  测绘类型
+     * @return
+     */
+    @GetMapping("/selectProjectType")
+    public ResultData selectProjectType();
 
 
 }

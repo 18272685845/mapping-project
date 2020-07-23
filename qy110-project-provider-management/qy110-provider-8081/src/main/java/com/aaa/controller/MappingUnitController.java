@@ -96,7 +96,6 @@ public class MappingUnitController  extends CommonController<MappingUnit> {
     }
 
     /**
-     <<<<<<< HEAD
      * 修改单位信息
      * @return
      */

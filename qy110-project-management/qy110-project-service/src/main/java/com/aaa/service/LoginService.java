@@ -21,8 +21,7 @@ import static com.aaa.status.RedisFlag.*;
 @Service
 public class LoginService extends BaseService<User> {
 
-    @Autowired
-    private UserMapper userMapper;
+
 
     /**
      * 登陆操作
