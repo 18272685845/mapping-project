@@ -27,11 +27,8 @@ public class IdUtils {
 
 
     /**
-     * @date:  2020/6/2
-     * @author: 秀仔
-     * @Description
      * 获取Long类型的id
-     * @param []
+     * @param
      * @return java.lang.String
      * @throws
      */

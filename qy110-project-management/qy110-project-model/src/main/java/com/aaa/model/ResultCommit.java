@@ -1,8 +1,28 @@
 package com.aaa.model;
 
+<<<<<<< HEAD
 import javax.persistence.*;
 import java.util.Date;
 
+=======
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+
+import javax.persistence.*;
+import java.util.Date;
+/**
+ * @Author 郭航宇
+ * @Date 15:45 2020/7/18
+ * Description:
+ **/
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Accessors(chain = true)
+>>>>>>> 0d292191da24dc20edf3fd6620c90bfe27e9458a
 @Table(name = "t_result_commit")
 public class ResultCommit {
     /**
@@ -91,6 +111,7 @@ public class ResultCommit {
      */
     private String coordinate;
 
+<<<<<<< HEAD
     /**
      * 获取编号
      *
@@ -360,4 +381,7 @@ public class ResultCommit {
     public void setCoordinate(String coordinate) {
         this.coordinate = coordinate == null ? null : coordinate.trim();
     }
+=======
+
+>>>>>>> 0d292191da24dc20edf3fd6620c90bfe27e9458a
 }

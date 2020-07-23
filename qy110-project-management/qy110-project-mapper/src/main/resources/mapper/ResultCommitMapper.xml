@@ -24,4 +24,5 @@
     <select id="selectResultCommitByNum" resultType="com.aaa.model.ResultCommit">
       select * from t_result_commit where ref_id = #{num}
     </select>
+
 </mapper>

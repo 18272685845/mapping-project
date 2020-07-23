@@ -20,4 +20,7 @@
     <select id="selectResourceByNum" resultType="com.aaa.model.Resource">
       select * from t_resource where ref_biz_id = #{number}
     </select>
+  <select id="selectResourceById" resultType="HashMap" parameterType="Long">
+       select u.unit_name,u.id,r.name,r.ref_biz_id,r.path from t_resource r, t_mapping_unit u where r.ref_biz_id=u.id and u.id=#{id}
+  </select>
 </mapper>

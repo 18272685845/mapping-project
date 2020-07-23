@@ -3,8 +3,13 @@ package com.aaa.base;
 import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import tk.mybatis.mapper.util.Sqls;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -157,7 +162,36 @@ public abstract class CommonController<T> extends BaseController {
     }
 
 
+    /**
+     *   防止数据不安全，所以不能直接在controller某个方法中直接接收HttpServletRequest对象
+     *   必须要从本地当前线程中获取对象
+     * @return
+     */
+    public HttpServletRequest getServletRequest(){
+        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+        ServletRequestAttributes servletRequestAttributes;
+        if (requestAttributes instanceof ServletRequestAttributes) {
+            servletRequestAttributes=(ServletRequestAttributes)requestAttributes;
+            return servletRequestAttributes.getRequest();
+        }
+        return null;
+    }
 
+    /**
+     * 获取当前客户端的session对象(如果不存在，则会重新创建一个)
+     * @return
+     */
+    public HttpSession getSession(){
+        return getServletRequest().getSession();
+    }
+
+    /**
+     * 获取当前客户端的session对象(如果不存在，则直接返回null)
+     * @return
+     */
+    public HttpSession getExistSession(){
+        return getServletRequest().getSession(false);
+    }
 
 
 

@@ -4,6 +4,7 @@ import com.aaa.model.Resource;
 import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -19,4 +20,13 @@ public interface ResourceMapper extends Mapper<Resource> {
      * @return
      */
     List<Resource> selectResourceByNum(String number);
+
+
+    /**
+     * 根据单位编号id查询附件表
+     * @param id
+     * @return
+     */
+    public List<HashMap> selectResourceById(Long id);
+
 }

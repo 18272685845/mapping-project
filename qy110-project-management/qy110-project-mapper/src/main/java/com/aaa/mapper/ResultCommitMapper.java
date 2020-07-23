@@ -16,3 +16,6 @@ public interface ResultCommitMapper extends Mapper<ResultCommit> {
 
     List<ResultCommit> selectResultCommitByNum(@Param("num") String num);
 }
+
+
+

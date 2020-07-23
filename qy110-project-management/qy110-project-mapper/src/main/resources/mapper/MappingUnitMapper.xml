@@ -62,6 +62,9 @@
   <select id="selectQualificationLevel" resultType="com.aaa.vo.MappingUnitVo">
     select count(*) num,qualification_level from t_mapping_unit group by qualification_level
   </select>
+  <select id="selectMappingUnitById" parameterType="Long" resultType="HashMap">
+      select * from t_mapping_unit where user_id=#{userId}
+  </select>
   <select id="selectTechnicist" resultType="java.util.Map">
     select count(*),major_type from t_technicist where user_id = #{userId} group by major_type
   </select>
