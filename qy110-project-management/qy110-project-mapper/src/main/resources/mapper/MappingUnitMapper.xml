@@ -59,20 +59,25 @@
     <result column="unit_intro" property="unitIntro" jdbcType="LONGVARCHAR" />
     <result column="coordinate" property="coordinate" jdbcType="LONGVARCHAR" />
   </resultMap>
-  <select id="selectQualificationLevel" resultType="java.util.List">
-    select count(*),qualification_level from t_mapping_unit group by qualification_level
+  <select id="selectQualificationLevel" resultType="com.aaa.vo.MappingUnitVo">
+    select count(*) num,qualification_level from t_mapping_unit group by qualification_level
   </select>
-  <select id="selectTechnicist" resultType="java.lang.Integer">
+  <select id="selectMappingUnitById" parameterType="Long" resultType="HashMap">
+      select * from t_mapping_unit where user_id=#{userId}
+  </select>
+  <select id="selectTechnicist" resultType="java.util.Map">
     select count(*),major_type from t_technicist where user_id = #{userId} group by major_type
   </select>
-  <select id="selectProjectNum" resultType="java.lang.Integer">
+  <select id="selectSpecialNum" resultType="java.util.Map">
+    select IFNULL(count(*),0) from t_special_post where user_id = #{userId}
+  </select>
+  <select id="selectProjectNum" resultType="java.util.Map">
     select count(*) from t_mapping_project where user_id = #{userId} group by user_id
   </select>
 
   <!--各个级别的单位的设备数量-->
-  <select id="selectAllEquipment" resultType="java.lang.Integer">
-
-    <if test="ownedDistrict like #{ownedDistrict}区% || ownedDistrict like #{ownedDistrict}县%">
+  <select id="selectAllEquipment" resultType="java.util.List">
+    <if test="ownedDistrict like %区% || ownedDistrict like %县%">
       select jia.num jia,yi.num yi,bing.num bing,ding.num ding,jia.tname from
       (select count(*) num,t.name tname from (select user_id from t_mapping_unit where qualification_level = '甲级') jia,t_equipment t where jia.user_id = t.user_id group by t.name) jia,
       (select count(*) num from (select user_id from t_mapping_unit where qualification_level = '乙级') jia,t_equipment t where jia.user_id = t.user_id group by t.name) yi,
@@ -81,7 +86,7 @@
     </if>>
   </select>
   <!--各个资质等级的单位数量-->
-  <select id="selectAllUnit" resultType="java.lang.Integer">
+  <select id="selectAllUnit" resultType="java.util.List">
 
     select jia.num jia,yi.num yi,bing.num bing,ding.num ding,jia.m from
 (select count(*) num,qualification_level m from t_mapping_unit where qualification_level = '甲级') jia,
@@ -89,6 +94,7 @@
 (select count(*) num from t_mapping_unit where qualification_level = '丙级') bing,
 (select count(*) num from t_mapping_unit where qualification_level = '丁级') ding
   </select>
+
   <select id="selectByRound" resultMap="BaseResultMap">
     SELECT * FROM t_mapping_unit where qualification_level='丙级' or qualification_level='丁级'
   </select>
@@ -98,4 +104,41 @@
   <select id="selectByBlack" resultMap="BaseResultMap">
     SELECT * FROM t_mapping_unit where  60 > score
   </select>
+
+
+  <select id="selectUnitByAuditStatus" resultType="com.aaa.model.MappingUnit">
+    select * from t_mapping_unit where audit_status = #{status}
+    <if test="name != null and name != '' " >
+    and unit_name =#{name}
+    </if>
+  </select>
+  <select id="selectOneUnitByName" resultType="com.aaa.model.MappingUnit">
+      select * from t_mapping_unit
+    <if test="name != null and name != '' " >
+     WHERE unit_name =#{name}
+    </if>
+  </select>
+  <select id="selectAllTech" resultType="java.util.List">
+    select a.a jiaA,a.b jiaB,a.c jiaC,
+b.a yiA,  b.b yiB,  b.c yiC,
+c.a bingA,c.b bingB,c.c bingC,
+d.a dingA,c.b dingB,c.c dingC from
+(select a.a a,b.b b,c.c c from
+(select count(*) a from t_technicist t,t_mapping_unit m where t.user_id = m.user_id and major_type = '高级技术人员' and m.qualification_level = '甲级' order BY t.major_type) a,
+(select count(*) b from t_technicist t,t_mapping_unit m where t.user_id = m.user_id and major_type = '中级技术人员' and m.qualification_level = '甲级' order BY t.major_type) b,
+(select count(*) c from t_technicist t,t_mapping_unit m where t.user_id = m.user_id and major_type = '初级技术人员' and m.qualification_level = '甲级' order BY t.major_type) c) a,
+(select a.a a,b.b b,c.c c from
+(select count(*) a from t_technicist t,t_mapping_unit m where t.user_id = m.user_id and major_type = '高级技术人员' and m.qualification_level = '乙级' order BY t.major_type) a,
+(select count(*) b from t_technicist t,t_mapping_unit m where t.user_id = m.user_id and major_type = '中级技术人员' and m.qualification_level = '乙级' order BY t.major_type) b,
+(select count(*) c from t_technicist t,t_mapping_unit m where t.user_id = m.user_id and major_type = '初级技术人员' and m.qualification_level = '乙级' order BY t.major_type) c) b,
+(select a.a a,b.b b,c.c c from
+(select count(*) a from t_technicist t,t_mapping_unit m where t.user_id = m.user_id and major_type = '高级技术人员' and m.qualification_level = '丙级' order BY t.major_type) a,
+(select count(*) b from t_technicist t,t_mapping_unit m where t.user_id = m.user_id and major_type = '中级技术人员' and m.qualification_level = '丙级' order BY t.major_type) b,
+(select count(*) c from t_technicist t,t_mapping_unit m where t.user_id = m.user_id and major_type = '初级技术人员' and m.qualification_level = '丙级' order BY t.major_type) c) c,
+(select a.a a,b.b b,c.c c from
+(select count(*) a from t_technicist t,t_mapping_unit m where t.user_id = m.user_id and major_type = '高级技术人员' and m.qualification_level = '丁级' order BY t.major_type) a,
+(select count(*) b from t_technicist t,t_mapping_unit m where t.user_id = m.user_id and major_type = '中级技术人员' and m.qualification_level = '丁级' order BY t.major_type) b,
+(select count(*) c from t_technicist t,t_mapping_unit m where t.user_id = m.user_id and major_type = '初级技术人员' and m.qualification_level = '丁级' order BY t.major_type) c) d
+  </select>
+
 </mapper>
